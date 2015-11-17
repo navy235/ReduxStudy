@@ -1,1 +1,2 @@
-# ES6Babel
+# Redux React Universal Study
+
