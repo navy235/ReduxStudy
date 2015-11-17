@@ -1,1 +1,1 @@
-# ReduxStudy
+# ES6Babel

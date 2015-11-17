@@ -1,12 +1,22 @@
 var webpack = require('webpack');
 var path = require('path');
-
 var fs = require('fs');
 var CHUNK_REGEX = /^([A-Za-z0-9_\-]+)\..*/;
 var _ = require('lodash');
+var babelrc = fs.readFileSync('./.babelrc');
+var babelLoaderQuery={};
+try {
+    babelLoaderQuery = JSON.parse(babelrc);
+    console.log(babelLoaderQuery);
+} catch (err) {
+    console.error('==>     ERROR: Error parsing your .babelrc.');
+    console.error(err);
+}
+
+
 var env = {
     hot_server_host:'127.0.0.1',
-    hot_server_port:5578
+    hot_server_port:5590
 };
 var config = {
     resolve: {
@@ -27,7 +37,7 @@ var config = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel-loader']
+                loaders: ['react-hot', 'babel?'+JSON.stringify(babelLoaderQuery),]
             },{
                 test: /\.json$/,
                 exclude: /node_modules/,

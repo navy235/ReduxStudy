@@ -1,7 +1,4 @@
-/**
- * Created by hshen on 6/29/2015.
- */
-var React = require('react');
+import React from 'react';
 
 var Html = React.createClass({
     render: function () {
@@ -15,16 +12,19 @@ var Html = React.createClass({
                 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,300italic,400italic'
                       rel='stylesheet' type='text/css'/>
                 <link href='/styles/main.css' rel="stylesheet" type="text/css"/>
+                <link href={this.props.assets.styles.main}  rel="stylesheet" type="text/css"></link>
             </head>
             <body>
-            <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+            <div id='main'>
+                <div id='app' dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
+            </div>
             <script dangerouslySetInnerHTML={{__html: this.props.exposed}}></script>
-            <script src={this.props.assets.common}></script>
-            <script src={this.props.assets.main}></script>
+            <script src={this.props.assets.javascript.common}></script>
+            <script src={this.props.assets.javascript.main}></script>
             </body>
             </html>
         );
     }
-})
+});
 
-module.exports = Html;
+export default Html

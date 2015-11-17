@@ -2,11 +2,19 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var webpackDevConfig = require('./webpack.dev.config');
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CHUNK_REGEX = /^([A-Za-z0-9_\-]+)\..*/;
+var babelrc = fs.readFileSync('./.babelrc');
+var babelLoaderQuery = {};
+try {
+    babelLoaderQuery = JSON.parse(babelrc);
+} catch (err) {
+    console.error('==>     ERROR: Error parsing your .babelrc.');
+    console.error(err);
+}
 var env = {
     hot_server_host:'127.0.0.1',
-    hot_server_port:5578
+    hot_server_port:5590
 };
 
 module.exports = function (grunt) {
@@ -93,12 +101,16 @@ module.exports = function (grunt) {
                 },
                 module: {
                     loaders: [
-                        {test: /\.jsx?$/, exclude: /node_modules/, loader: require.resolve('babel-loader')},
                         {
+                            test: /\.jsx?$/,
+                            exclude: /node_modules/,
+                            loaders: ['react-hot', 'babel?' + JSON.stringify(babelLoaderQuery),]
+                        }, {
                             test: /\.json$/,
                             exclude: /node_modules/,
-                            loaders:['json-loader']
-                        }
+                            loaders: ['json-loader']
+                        },
+                        {test: /\.less/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")}
                     ]
                 },
                 plugins: [
@@ -113,8 +125,7 @@ module.exports = function (grunt) {
                     new webpack.optimize.OccurenceOrderPlugin(),
                     new webpack.optimize.CommonsChunkPlugin('common.[hash].min.js', 2),
 
-                    // This ensures requires for `react` and `react/addons` normalize to the same requirement
-                    new webpack.NormalModuleReplacementPlugin(/^react(\/addons)?$/, require.resolve('react/addons')),
+
 
                     new webpack.optimize.UglifyJsPlugin({
                         compress: {

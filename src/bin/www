@@ -1,18 +1,13 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
+require('../../server.babel');
 var app = require('../server');
-var debug = require('debug')('ReduxStudy:server');
+var debug = require('debug')('ES6Babel:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3011');
+var port = normalizePort(process.env.PORT || '3035');
 app.set('port', port);
 
 /**
@@ -87,4 +82,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
