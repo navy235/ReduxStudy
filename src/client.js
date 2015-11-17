@@ -3,36 +3,21 @@ import React from 'react';
 import ReactDOM from'react-dom';
 import {Router} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory'
+import {reduxReactRouter, ReduxRouter} from 'redux-router';
 import createRoutes from './routes'
-import app from './app'
-import fetchData from './utils/fetchData';
-let history = createBrowserHistory();
-window.React = React;
-let dehydratedState = window.__DATA__;
-let firstRender = true;
+import createStore from './stores/createStore'
+import ApiClient from './utils/ApiClient';
+import makeRouteHooksSafe from './utils/makeRouteHooksSafe';
 
-app.rehydrate(dehydratedState, (err, context)=> {
-    if (err) {
-        throw err;
-    }
-    window.context = context;
-    let routes = createRoutes(context);
-    ReactDOM.render(
-        React.createElement(
-            FluxibleComponent,
-            {context: context.getComponentContext()},
-            React.createElement(Router, {
-                history: history,
-                children: routes,
-                onUpdate: UpdateRoute
-            })
-        ),
-        document.getElementById('main')
-    );
-    function UpdateRoute() {
-        if (!firstRender) {
-            fetchData(context, this.state);
-        }
-        firstRender = false;
-    }
-});
+const store = createStore(reduxReactRouter, makeRouteHooksSafe(createRoutes), createHistory, client, window.__DATA__);
+
+const component = (
+    <ReduxRouter routes={createRoutes(store)} />
+);
+
+ReactDOM.render(
+    <Provider store={store} key="provider">
+        {component}
+    </Provider>,
+    document.getElementById('main')
+);

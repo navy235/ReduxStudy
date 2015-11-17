@@ -1,10 +1,11 @@
 import React from 'react';
 import {IndexRoute, Route} from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { load as loadAuth } from './actions/auth';
 import {
     App,
     Home,
-    Login
+    Login,
+    NotFound
 } from 'containers';
 
 export default (store) => {
@@ -16,6 +17,10 @@ export default (store) => {
                 replaceState(null, '/');
             }
             cb();
+        }
+
+        function isAuthLoaded(state){
+            return state.auth && state.auth.loaded;
         }
 
         if (!isAuthLoaded(store.getState())) {

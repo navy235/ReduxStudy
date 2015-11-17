@@ -65,7 +65,6 @@ var config = {
             this.plugin('done', function (stats) {
                 var data = stats.toJson();
                 var assets = data.assetsByChunkName;
-                console.log(assets)
                 var output = {
                     assets: {},
                     cdnPath: this.options.output.publicPath

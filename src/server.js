@@ -18,10 +18,11 @@ import ApiClient from './utils/ApiClient';
 import getStatusFromRoutes from './utils/getStatusFromRoutes';
 import Html from './components/Html'
 import createRoutes from './routes';
+import createStore from './stores/createStore';
 import apiService  from './services';
 import config from './configs/server';
 
-let server = express();
+const server = express();
 
 // view engine setup
 server.set('views', path.join(__dirname, 'views'));
@@ -71,13 +72,12 @@ server.use((req, res) => {
                     res.status(status);
                 }
                 res.send('<!doctype html>\n' +
-                    ReactDOM.renderToString(<Html assets={assets} component={component} store={store}/>));
+                    renderToString(<Html assets={assets} component={component} store={store}/>));
             }).catch((err) => {
                 res.render('error', {status: 500, stack: err.message})
             });
         }
     }));
-    })
 })
 
 module.exports = server;
