@@ -38,7 +38,6 @@ export default ({getState, dispatch}) => next => action => {
             // our promise to let the server know when it can render
             getState().router = promise;
         }
-
         return promise;
     }
 

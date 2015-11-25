@@ -1,3 +1,11 @@
-/**
- * Created by navy on 2015/11/17.
- */
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import {FullScreen} from '../components/UI';
+export default class Home extends Component {
+    render(){
+        return (
+            <FullScreen id="home" scroll={true} >
+            </FullScreen>
+        )
+    }
+}

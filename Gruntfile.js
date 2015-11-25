@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 var webpackDevConfig = require('./webpack.dev.config');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CHUNK_REGEX = /^([A-Za-z0-9_\-]+)\..*/;
 var babelrc = fs.readFileSync('./.babelrc');
 var babelLoaderQuery = {};
@@ -13,8 +12,8 @@ try {
     console.error(err);
 }
 var env = {
-    hot_server_host:'127.0.0.1',
-    hot_server_port:5590
+    hot_server_host: '127.0.0.1',
+    hot_server_port: 5590
 };
 
 module.exports = function (grunt) {
@@ -35,12 +34,12 @@ module.exports = function (grunt) {
         less: {
             dev: {
                 files: {
-                    "./src/public/styles/main.css": "./src/public/styles/main.less"
+                    './src/public/styles/main.css': './src/public/styles/main.less'
                 }
             },
             prod: {
                 files: {
-                    "./src/public/styles/main.css": "./src/public/styles/main.less"
+                    './src/public/styles/main.css': './src/public/styles/main.less'
                 },
                 options: {
                     compress: true
@@ -55,7 +54,7 @@ module.exports = function (grunt) {
                     extensions: ['', '.js', '.jsx']
                 },
                 entry: {
-                    test:['./index.js']
+                    test: ['./index.js']
                 },
                 output: {
                     path: '<%= project.test %>',
@@ -69,7 +68,7 @@ module.exports = function (grunt) {
                         {
                             test: /\.json$/,
                             exclude: /node_modules/,
-                            loaders:['json-loader']
+                            loaders: ['json-loader']
                         }
                     ]
                 },
@@ -109,8 +108,7 @@ module.exports = function (grunt) {
                             test: /\.json$/,
                             exclude: /node_modules/,
                             loaders: ['json-loader']
-                        },
-                        {test: /\.less/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")}
+                        }
                     ]
                 },
                 plugins: [
@@ -124,9 +122,6 @@ module.exports = function (grunt) {
                     new webpack.optimize.DedupePlugin(),
                     new webpack.optimize.OccurenceOrderPlugin(),
                     new webpack.optimize.CommonsChunkPlugin('common.[hash].min.js', 2),
-
-
-
                     new webpack.optimize.UglifyJsPlugin({
                         compress: {
                             warnings: false
@@ -135,7 +130,6 @@ module.exports = function (grunt) {
                             comments: false
                         }
                     }),
-
                     // generates webpack assets config to use hashed assets in production mode
                     function webpackStatsPlugin() {
                         this.plugin('done', function (stats) {
@@ -153,7 +147,7 @@ module.exports = function (grunt) {
                                 if (matches) {
                                     key = matches[1];
                                 }
-                                output.assets[key] =  '/build/js/' + value;
+                                output.assets[key] = '/build/js/' + value;
                             });
                             //add essentials
                             fs.writeFileSync(

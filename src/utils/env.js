@@ -1,4 +1,4 @@
 export default {
-    CLIENT: typeof window !== undefined,
-    SERVER: typeof window === undefined
+    CLIENT: typeof window !== 'undefined',
+    SERVER: typeof window === 'undefined'
 }

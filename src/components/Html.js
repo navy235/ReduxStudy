@@ -27,10 +27,8 @@ export default class Html extends Component {
             <html lang="en-us">
             <head>
                 {DocumentMeta.renderAsReact()}
-
-                <link rel="shortcut icon" href="/favicon.ico" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+                <link href='/static/styles/main.css' rel="stylesheet" type="text/css"/>
             </head>
             <body>
             <div id="main" dangerouslySetInnerHTML={{__html: content}}/>

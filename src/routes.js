@@ -6,7 +6,7 @@ import {
     Home,
     Login,
     NotFound
-} from 'containers';
+} from './containers';
 
 export default (store) => {
     const requireLogin = (nextState, replaceState, cb) => {
@@ -14,7 +14,7 @@ export default (store) => {
             const { auth: { user }} = store.getState();
             if (!user) {
                 // oops, not logged in, so can't be here!
-                replaceState(null, '/');
+                replaceState(null, '/login');
             }
             cb();
         }
